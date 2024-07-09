@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+</head>
+
+<body>
+  <p>
+    <button onclick="appendToCalculation('1')">1</button>
+    <button onclick="appendToCalculation('2')">2</button>
+    <button onclick="appendToCalculation('3')">3</button>
+    <button onclick="appendToCalculation(' + ')">+</button>
+  </p>
+
+  <p>
+    <button onclick="appendToCalculation('4')">4</button>
+    <button onclick="appendToCalculation('5')">5</button>
+    <button onclick="appendToCalculation('6')">6</button>
+    <button onclick="appendToCalculation(' - ')">-</button>
+  </p>
+
+  <p>
+    <button onclick="appendToCalculation('7')">7</button>
+    <button onclick="appendToCalculation('8')">8</button>
+    <button onclick="appendToCalculation('9')">9</button>
+    <button onclick="appendToCalculation(' * ')">*</button>
+  </p>
+
+  <p>
+    <button onclick="appendToCalculation('0')">0</button>
+    <button onclick="clearCalculation()">C</button>
+    <button onclick="appendToCalculation(' / ')">/</button>
+    <button onclick="calculateResult()">=</button>
+  </p>
+
+  <p id="result"></p>
+
+  <script>
+    // Function to load calculation from localStorage or use a default value
+    function loadCalculation() {
+      return localStorage.getItem("calculation") || "";
+    }
+
+    // Initialize the calculation variable
+    let calculation = loadCalculation();
+
+    // Display the current calculation
+    document.getElementById("result").innerText = "Calculation: " + calculation;
+
+    // Function to save the calculation to localStorage
+    function saveCalculation() {
+      localStorage.setItem("calculation", calculation);
+    }
+
+    // Function to append a value to the calculation
+    function appendToCalculation(value) {
+      calculation += value;
+      document.getElementById("result").innerText = "Calculation: " + calculation;
+      saveCalculation();
+      console.log(calculation);
+    }
+
+    // Function to calculate the result
+    function calculateResult() {
+      try {
+        calculation = eval(calculation);
+        document.getElementById("result").innerText = "Result: " + calculation;
+        console.log(calculation);
+        saveCalculation();
+      } catch (error) {
+        console.error("Invalid calculation:", calculation);
+        document.getElementById("result").innerText = "Error";
+      }
+    }
+
+    // Function to clear the calculation
+    function clearCalculation() {
+      calculation = "";
+      document.getElementById("result").innerText = "";
+      saveCalculation();
+      console.log("Calculation cleared");
+    }
+  </script>
+</body>
+
+</html>
